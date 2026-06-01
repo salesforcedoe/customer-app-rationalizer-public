@@ -142,27 +142,6 @@ const SLIDES: Slide[] = [
     ),
   },
   {
-    id: 'agent',
-    label: 'Talk to the Agent',
-    render: () => (
-      <div>
-        <div className="slide-head">
-          <div className="eyebrow">Live agent surface</div>
-          <h2 className="slide-h2">Same brain. Three doors.</h2>
-          <p className="lede">
-            The chat widget below is the same Application Strategy Agent powering
-            the Experience Cloud surface and the Slackbot DM.
-          </p>
-        </div>
-        <div id="agent-embed-slot" className="agent-slot">
-          <div className="agent-placeholder">
-            Agent embed loads here once the SDO Messaging for Web snippet is wired in.
-          </div>
-        </div>
-      </div>
-    ),
-  },
-  {
     id: 'close',
     label: 'API is the UI',
     render: () => (
