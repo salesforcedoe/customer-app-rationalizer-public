@@ -31,7 +31,7 @@ function App() {
     <main>
       <header className="hero">
         <div className="eyebrow">EA Hackathon · 2026-06-01</div>
-        <h1>Customer App Rationalizer</h1>
+        <h1>Headless360 App Rationalizer</h1>
         <p className="lede">
           Drop a customer's app inventory in. Get back a 4-Systems classification —
           replace, coexist, or integrate — grounded in the Headless 360 architecture.
