@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import './App.css'
 
 type Theme = 'dark' | 'light'
@@ -20,6 +20,9 @@ function useTheme(): [Theme, () => void] {
 
   return [theme, () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))]
 }
+
+const ARCHITECTURE_URL =
+  `${import.meta.env.BASE_URL}architecture.html`.replace(/\/+/g, '/')
 
 const SYSTEMS = [
   {
@@ -44,14 +47,196 @@ const SYSTEMS = [
   },
 ]
 
-const ARCHITECTURE_URL =
-  `${import.meta.env.BASE_URL}architecture.html`.replace(/\/+/g, '/')
+type Slide = {
+  id: string
+  label: string
+  render: () => React.ReactNode
+}
+
+const SLIDES: Slide[] = [
+  {
+    id: 'title',
+    label: 'Title',
+    render: () => (
+      <div className="slide-center">
+        <div className="eyebrow">EA Hackathon · 2026-06-01</div>
+        <h1 className="slide-title">Headless360 App Rationalizer</h1>
+        <p className="lede">
+          Drop a customer's app inventory in. Get back a 4-Systems classification —
+          replace, coexist, or integrate — grounded in the Headless 360 architecture.
+        </p>
+      </div>
+    ),
+  },
+  {
+    id: 'problem',
+    label: 'The Problem',
+    render: () => (
+      <div className="slide-center slide-problem">
+        <div className="eyebrow">The same conversation, every time</div>
+        <h2 className="slide-h2">"Here's our spreadsheet."</h2>
+        <div className="stat-row">
+          <div className="stat">
+            <div className="stat-num">1,319</div>
+            <div className="stat-label">GM apps in their rationalization workbook</div>
+          </div>
+          <div className="stat">
+            <div className="stat-num">150</div>
+            <div className="stat-label">PACCAR / DAF sales applications</div>
+          </div>
+          <div className="stat">
+            <div className="stat-num">6</div>
+            <div className="stat-label">Stellantis brands consolidating</div>
+          </div>
+        </div>
+        <p className="lede">
+          Every conversation ends the same way: <em>we'll get back to you.</em>
+          Today we end one differently.
+        </p>
+      </div>
+    ),
+  },
+  {
+    id: 'four-systems',
+    label: 'The 4 Systems',
+    render: () => (
+      <div>
+        <div className="slide-head">
+          <div className="eyebrow">Headless 360</div>
+          <h2 className="slide-h2">The 4-Systems Framework</h2>
+        </div>
+        <div className="systems">
+          {SYSTEMS.map((s) => (
+            <article key={s.key} className={`system system--${s.key}`}>
+              <h3>{s.title}</h3>
+              <p>{s.blurb}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'architecture',
+    label: 'Architecture',
+    render: () => (
+      <div>
+        <div className="slide-head">
+          <div className="eyebrow">Reference architecture</div>
+          <h2 className="slide-h2">Four primitives. One agent. Three doors.</h2>
+          <a
+            href={ARCHITECTURE_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="architecture-open"
+          >
+            Open full diagram ↗
+          </a>
+        </div>
+        <iframe
+          src={ARCHITECTURE_URL}
+          title="Reference Architecture — Headless360 App Rationalizer"
+          className="architecture-frame"
+        />
+      </div>
+    ),
+  },
+  {
+    id: 'agent',
+    label: 'Talk to the Agent',
+    render: () => (
+      <div>
+        <div className="slide-head">
+          <div className="eyebrow">Live agent surface</div>
+          <h2 className="slide-h2">Same brain. Three doors.</h2>
+          <p className="lede">
+            The chat widget below is the same Application Strategy Agent powering
+            the Experience Cloud surface and the Slackbot DM.
+          </p>
+        </div>
+        <div id="agent-embed-slot" className="agent-slot">
+          <div className="agent-placeholder">
+            Agent embed loads here once the SDO Messaging for Web snippet is wired in.
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'close',
+    label: 'API is the UI',
+    render: () => (
+      <div className="slide-center slide-close">
+        <h2 className="slide-h2">"API is the UI."</h2>
+        <p className="lede">
+          That's Headless 360 in one sentence. Every action this agent takes is
+          an Apex Invocable. The same engine answers from a Slack bot, an email
+          handler, or an MCP client tomorrow — built in an SDO with MeshMesh,
+          in about six hours.
+        </p>
+        <div className="close-stack">
+          <span className="pill">Experience Cloud</span>
+          <span className="pill">Agentforce</span>
+          <span className="pill">Data Cloud</span>
+          <span className="pill">Slack</span>
+        </div>
+      </div>
+    ),
+  },
+]
 
 function App() {
   const [theme, toggleTheme] = useTheme()
+  const [index, setIndex] = useState(() => {
+    if (typeof window === 'undefined') return 0
+    const hash = window.location.hash.replace('#', '')
+    const i = SLIDES.findIndex((s) => s.id === hash)
+    return i >= 0 ? i : 0
+  })
+
+  const goTo = useCallback((i: number) => {
+    const clamped = Math.max(0, Math.min(SLIDES.length - 1, i))
+    setIndex(clamped)
+    window.location.hash = SLIDES[clamped].id
+  }, [])
+
+  const next = useCallback(() => goTo(index + 1), [goTo, index])
+  const prev = useCallback(() => goTo(index - 1), [goTo, index])
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault()
+        next()
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault()
+        prev()
+      } else if (e.key === 'Home') {
+        e.preventDefault()
+        goTo(0)
+      } else if (e.key === 'End') {
+        e.preventDefault()
+        goTo(SLIDES.length - 1)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [next, prev, goTo])
+
+  useEffect(() => {
+    const onHashChange = () => {
+      const hash = window.location.hash.replace('#', '')
+      const i = SLIDES.findIndex((s) => s.id === hash)
+      if (i >= 0 && i !== index) setIndex(i)
+    }
+    window.addEventListener('hashchange', onHashChange)
+    return () => window.removeEventListener('hashchange', onHashChange)
+  }, [index])
+
+  const slide = SLIDES[index]
 
   return (
-    <main>
+    <div className="deck">
       <button
         type="button"
         className="theme-toggle"
@@ -61,70 +246,51 @@ function App() {
         <span className="theme-toggle-icon" aria-hidden="true">
           {theme === 'dark' ? '☀️' : '🌙'}
         </span>
-        <span>{theme === 'dark' ? 'Light' : 'Dark'} mode</span>
+        <span>{theme === 'dark' ? 'Light' : 'Dark'}</span>
       </button>
-      <header className="hero">
-        <div className="eyebrow">EA Hackathon · 2026-06-01</div>
-        <h1>Headless360 App Rationalizer</h1>
-        <p className="lede">
-          Drop a customer's app inventory in. Get back a 4-Systems classification —
-          replace, coexist, or integrate — grounded in the Headless 360 architecture.
-        </p>
-      </header>
 
-      <section className="systems">
-        {SYSTEMS.map((s) => (
-          <article key={s.key} className={`system system--${s.key}`}>
-            <h2>{s.title}</h2>
-            <p>{s.blurb}</p>
-          </article>
-        ))}
-      </section>
+      <main className="slide" key={slide.id}>
+        {slide.render()}
+      </main>
 
-      <section className="architecture">
-        <div className="architecture-head">
-          <h2>Reference architecture</h2>
-          <p>
-            Four Salesforce primitives — custom object, custom metadata, Apex
-            Invocable, Agentforce agent — wired into one Experience Cloud site
-            with an LWC for the grid, plus the same agent surfaced in Slack.
-            <a
-              href={ARCHITECTURE_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="architecture-open"
-            >
-              Open full diagram ↗
-            </a>
-          </p>
+      <nav className="deck-nav" aria-label="Slide navigation">
+        <button
+          type="button"
+          className="nav-btn"
+          onClick={prev}
+          disabled={index === 0}
+          aria-label="Previous slide"
+        >
+          ←
+        </button>
+        <div className="dots" role="tablist">
+          {SLIDES.map((s, i) => (
+            <button
+              key={s.id}
+              type="button"
+              className={`dot ${i === index ? 'dot--active' : ''}`}
+              onClick={() => goTo(i)}
+              aria-label={`Slide ${i + 1}: ${s.label}`}
+              aria-selected={i === index}
+              role="tab"
+              title={s.label}
+            />
+          ))}
         </div>
-        <iframe
-          src={ARCHITECTURE_URL}
-          title="Reference Architecture — Customer App Rationalizer"
-          className="architecture-frame"
-        />
-      </section>
-
-      <section className="agent">
-        <h2>Talk to the agent</h2>
-        <p>
-          The chat widget below is the same Application Strategy Agent powering
-          the Experience Cloud surface and the Slackbot DM. Same brain, three
-          doors.
-        </p>
-        <div id="agent-embed-slot" className="agent-slot">
-          <div className="agent-placeholder">
-            Agent embed loads here once the SDO Messaging for Web snippet is wired in.
-          </div>
+        <button
+          type="button"
+          className="nav-btn"
+          onClick={next}
+          disabled={index === SLIDES.length - 1}
+          aria-label="Next slide"
+        >
+          →
+        </button>
+        <div className="counter">
+          {index + 1} / {SLIDES.length}
         </div>
-      </section>
-
-      <footer>
-        <p>
-          Built on Salesforce Platform · Experience Cloud · Agentforce · Data Cloud · Slack
-        </p>
-      </footer>
-    </main>
+      </nav>
+    </div>
   )
 }
 
