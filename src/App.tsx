@@ -119,6 +119,11 @@ const SLIDES: Slide[] = [
             </article>
           ))}
         </div>
+        <img
+          src={`${import.meta.env.BASE_URL}four-systems-map.png`.replace(/\/+/g, '/')}
+          alt="4-Systems map — Agentforce, Slack, Tableau, Customer 360, Data 360 with MCP tool inventory"
+          className="four-systems-map"
+        />
       </div>
     ),
   },
