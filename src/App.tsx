@@ -129,7 +129,7 @@ const SLIDES: Slide[] = [
       <div>
         <div className="slide-head">
           <div className="eyebrow">Reference architecture</div>
-          <h2 className="slide-h2">Four primitives. One agent. Three doors.</h2>
+          <h2 className="slide-h2">Headless 360 is open to any agent</h2>
           <a
             href={ARCHITECTURE_URL}
             target="_blank"
