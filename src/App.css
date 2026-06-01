@@ -118,152 +118,46 @@ main {
   padding: 24px;
 }
 
-.talktrack {
+.architecture {
   margin-bottom: 64px;
 }
 
-.talktrack-head {
-  margin-bottom: 32px;
+.architecture-head {
+  margin-bottom: 24px;
 }
 
-.talktrack-head h2 {
+.architecture-head h2 {
   margin: 0 0 8px;
   font-size: 1.75rem;
 }
 
-.talktrack-head p {
+.architecture-head p {
   color: var(--muted);
   margin: 0;
-  max-width: 720px;
-}
-
-.beats {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  max-width: 760px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
 }
 
-.beat {
-  background: var(--surface);
-  border-radius: 12px;
-  padding: 24px 28px;
-  border-left: 4px solid var(--accent);
-}
-
-.beat--out-of-role {
-  border-left-color: var(--agency);
-}
-
-.beat-meta {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-bottom: 8px;
-}
-
-.beat-num {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--muted);
+.architecture-open {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.9rem;
   font-weight: 600;
 }
 
-.beat-time {
-  font-family: 'SF Mono', 'Monaco', monospace;
-  font-size: 0.8rem;
-  color: var(--accent);
-  background: rgba(0, 161, 224, 0.12);
-  padding: 2px 8px;
-  border-radius: 4px;
+.architecture-open:hover {
+  text-decoration: underline;
 }
 
-.beat-role {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-weight: 600;
-}
-
-.beat-role--in-role {
-  background: rgba(43, 212, 169, 0.15);
-  color: var(--context);
-}
-
-.beat-role--out-of-role {
-  background: rgba(184, 107, 255, 0.15);
-  color: var(--agency);
-}
-
-.beat-title {
-  margin: 0 0 12px;
-  font-size: 1.2rem;
-}
-
-.beat-body p,
-.beat-body ul {
-  margin: 0 0 12px;
-  color: var(--text);
-}
-
-.beat-body p:last-child,
-.beat-body ul:last-child {
-  margin-bottom: 0;
-}
-
-.beat-body ul {
-  padding-left: 20px;
-}
-
-.beat-body li {
-  margin-bottom: 8px;
-}
-
-.beat-body li:last-child {
-  margin-bottom: 0;
-}
-
-.beat-body em {
-  color: var(--muted);
-  font-style: italic;
-}
-
-.beat-body code {
-  background: var(--surface-2);
-  padding: 1px 6px;
-  border-radius: 3px;
-  font-size: 0.85em;
-  color: var(--accent);
-}
-
-.prompt {
-  background: var(--surface-2);
-  border-radius: 8px;
-  padding: 16px 20px;
-  margin: 12px 0;
-}
-
-.prompt-label {
+.architecture-frame {
+  width: 100%;
+  height: 1400px;
+  border: 0;
+  border-radius: 16px;
+  background: #f8fafc;
   display: block;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--agency);
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-.prompt p {
-  margin: 0;
-  font-size: 0.95rem;
-  font-style: italic;
-  color: var(--muted);
 }
 
 footer {
