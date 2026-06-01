@@ -58,12 +58,18 @@ const SLIDES: Slide[] = [
     id: 'title',
     label: 'Title',
     render: () => (
-      <div className="slide-center">
-        <div className="eyebrow">EA Hackathon · 2026-06-01</div>
-        <h1 className="slide-title">Headless360 App Rationalizer</h1>
-        <p className="lede">
-          Drop a customer's app inventory in. Get back a 4-Systems classification —
-          replace, coexist, or integrate — grounded in the Headless 360 architecture.
+      <div className="slide-title-wrap">
+        <p className="title-setup">
+          Every customer hands us<br />the same spreadsheet.
+        </p>
+        <p className="title-pivot">Today we hand back</p>
+        <h1 className="title-punch">an architecture.</h1>
+        <div className="title-divider" />
+        <div className="title-brand">Headless360 App Rationalizer</div>
+        <p className="title-sub">
+          The 4-Systems framework — drawn live by an agent.
+          <br />
+          <strong>1,319 GM apps. 90 seconds. One pattern.</strong>
         </p>
       </div>
     ),
