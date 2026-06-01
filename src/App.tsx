@@ -154,7 +154,7 @@ const SLIDES: Slide[] = [
       <div className="slide-center slide-close">
         <h2 className="slide-h2">Enough talk. Let's watch it work.</h2>
         <p className="lede">
-          One agent. One Apex layer. Three doors. Watch it triage apps live.
+          One agent. One Apex layer. Any Surface. Watch it triage apps live.
         </p>
         <div className="close-stack">
           <span className="pill">Experience Cloud</span>
