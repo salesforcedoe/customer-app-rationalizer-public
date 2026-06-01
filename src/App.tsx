@@ -69,7 +69,7 @@ const SLIDES: Slide[] = [
         <p className="title-sub">
           The 4-Systems framework — drawn live by an agent.
           <br />
-          <strong>1,319 GM apps. 90 seconds. One pattern.</strong>
+          <strong>Interactive. Quick. Results and Value Driven.</strong>
         </p>
       </div>
     ),
