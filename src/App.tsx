@@ -149,15 +149,13 @@ const SLIDES: Slide[] = [
   },
   {
     id: 'close',
-    label: 'API is the UI',
+    label: 'To the demo',
     render: () => (
       <div className="slide-center slide-close">
-        <h2 className="slide-h2">"API is the UI."</h2>
+        <h2 className="slide-h2">Enough talk. Let's watch it work.</h2>
         <p className="lede">
-          That's Headless 360 in one sentence. Every action this agent takes is
-          an Apex Invocable. The same engine answers from a Slack bot, an email
-          handler, or an MCP client tomorrow — built in an SDO with MeshMesh,
-          in about six hours.
+          One agent. One Apex layer. Three doors. Watch it triage 1,300+ apps
+          live.
         </p>
         <div className="close-stack">
           <span className="pill">Experience Cloud</span>
