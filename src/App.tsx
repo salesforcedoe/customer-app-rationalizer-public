@@ -1,4 +1,25 @@
+import { useEffect, useState } from 'react'
 import './App.css'
+
+type Theme = 'dark' | 'light'
+
+function useTheme(): [Theme, () => void] {
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === 'undefined') return 'dark'
+    const stored = window.localStorage.getItem('theme') as Theme | null
+    if (stored === 'dark' || stored === 'light') return stored
+    return window.matchMedia('(prefers-color-scheme: light)').matches
+      ? 'light'
+      : 'dark'
+  })
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+    window.localStorage.setItem('theme', theme)
+  }, [theme])
+
+  return [theme, () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))]
+}
 
 const SYSTEMS = [
   {
@@ -27,8 +48,21 @@ const ARCHITECTURE_URL =
   `${import.meta.env.BASE_URL}architecture.html`.replace(/\/+/g, '/')
 
 function App() {
+  const [theme, toggleTheme] = useTheme()
+
   return (
     <main>
+      <button
+        type="button"
+        className="theme-toggle"
+        onClick={toggleTheme}
+        aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+      >
+        <span className="theme-toggle-icon" aria-hidden="true">
+          {theme === 'dark' ? '☀️' : '🌙'}
+        </span>
+        <span>{theme === 'dark' ? 'Light' : 'Dark'} mode</span>
+      </button>
       <header className="hero">
         <div className="eyebrow">EA Hackathon · 2026-06-01</div>
         <h1>Headless360 App Rationalizer</h1>
